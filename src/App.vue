@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app">
     <Header />
     <router-view />
   </div>
@@ -13,9 +13,13 @@ export default defineComponent({
   name: "App",
   components: { Header },
 });
-// import useRoute from "vue-router";
 </script>
 
 <style lang="scss">
 @import "./styles/main.scss";
+.app {
+  margin: 0 auto;
+  min-width: 300px;
+  max-width: 600px;
+}
 </style>
