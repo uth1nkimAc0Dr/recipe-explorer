@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DetailPage from "@/views/DetailPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import SearchPage from "@/views/SearchPage.vue";
+import DetailPage from "@/views/DetailPage.vue";
 
 const routes = [
   {
@@ -9,14 +9,15 @@ const routes = [
     name: "Home",
     component: HomePage,
   },
+
   {
     path: "/search",
     name: "Search",
     component: SearchPage,
   },
+
   {
-    path: "/detail",
-    // or detail wit id
+    path: "/detail/:id",
     name: "Detail",
     component: DetailPage,
   },

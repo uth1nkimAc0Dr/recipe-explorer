@@ -2,46 +2,53 @@ import { defineStore } from "pinia";
 import {
   getRecipeInformation,
   searchRecipes,
-  searchRecipesByIngredients,
-} from "@/services/api/recipeService";
+  // searchRecipesByIngredients,
+} from "@/services/api/rest/recipeService";
+import { ref } from "vue";
+// import { fi } from "element-plus/es/locale";
 
-// хранилище
-export const useRecipeStore = defineStore("recipe", {
-  // инициализация состояния
-  state: () => ({
-    recipes: [], // массив списка рецептов
-    recipeDetail: null, //детали рецепта
-    loading: false, //состояние загрузки
-    error: null, //ошибки
-  }),
-  actions: {
-    async fetchRecipes(
-      query: string,
-      cuisine: string,
-      offset: number,
-      number: number
-    ) {
-      this.loading = true;
-      try {
-        const response = await searchRecipes(query, cuisine, offset, number);
-        this.recipes = response.data.results;
-      } catch (error: any) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
+export const useRecipeStore = defineStore("recipe", () => {
+  const recipes = ref<any[]>([]); //массив списка рецептов
+  const recipeDetail = ref<any | null>(null);
+  const loading = ref<boolean>(false);
+  const error = ref<any>(null);
 
-    async fetchRecipeDetail(id: number, includeNutrition: boolean) {
-      this.loading = true;
-      try {
-        const response = await getRecipeInformation(id, includeNutrition);
-        this.recipeDetail = response.data;
-      } catch (error: any) {
-        this.error = error;
-      } finally {
-        this.loading = false;
-      }
-    },
-  },
+  // actinos
+  const fetchRecipes = async (
+    query: string,
+    cuisine: string,
+    offset: number,
+    number: number
+  ) => {
+    loading.value = true;
+    try {
+      const response = await searchRecipes(query, cuisine, offset, number);
+      recipes.value = response.data.results;
+    } catch (error: any) {
+      error.value = error;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const fetchRecipeDetail = async (id: number, includeNutrition: boolean) => {
+    loading.value = true;
+    try {
+      const response = await getRecipeInformation(id, includeNutrition);
+      recipeDetail.value = response.data;
+    } catch (error: any) {
+      error.value = error;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  return {
+    recipes,
+    recipeDetail,
+    loading,
+    error,
+    fetchRecipes,
+    fetchRecipeDetail,
+  };
 });

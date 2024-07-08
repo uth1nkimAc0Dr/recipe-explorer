@@ -6,7 +6,7 @@ const baseUrl = "https://api.spoonacular.com";
 const apiClient = axios.create({
   baseURL: baseUrl,
   params: {
-    apiKey: apiKey, //параметр по умолчанию
+    apiKey: apiKey,
   },
 });
 
