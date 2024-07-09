@@ -8,13 +8,13 @@
       >
         Home
       </div>
-      <div
+      <!-- <div
         class="header__nav-item"
         :class="{ active: currentRoute === '/search' }"
         @click="navigateTo('/search')"
       >
         Search
-      </div>
+      </div> -->
       <div
         class="header__nav-item"
         :class="{ active: currentRoute === '/detail' }"
@@ -55,14 +55,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.header__nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+.header {
+  &__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-.header__nav-item.active {
-  color: blueviolet;
+    &-item {
+      cursor: pointer;
+
+      &.active {
+        color: blueviolet;
+      }
+    }
+  }
 }
 
 // .active {

@@ -4,19 +4,18 @@
       v-model="searchQuery"
       @input="onSearch"
       placeholder="Search for recipes..."
-    />
+    ></input>
     <div v-for="recipe in recipes" :key="recipe.id">
       <router-link :to="`detail/${recipe.id}`">{{ recipe.title }}</router-link>
     </div>
-    <div></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import { useRecipeStore } from "@/store/recipeStore";
-import { debounce } from "lodash";
-import { useRouter, useRoute } from "vue-router";
+import { useDebounceFn } from "@vueuse/core";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -25,9 +24,18 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
-    const onSearch = debounce(() => {
-      store.fetchRecipes(searchQuery.value, "", 0, 10);
-    }, 300);
+    const onSearch = useDebounceFn(() => {
+      store.fetchRecipes(searchQuery.value, "", 0, 20);
+    }, 1000);
+
+    const recipes = computed(()=>store.recipes);
+
+    watch(
+      () => searchQuery.value,
+      () => {
+        onSearch();
+      }
+    );
 
     watch(
       () => store.recipes,
@@ -38,9 +46,9 @@ export default defineComponent({
 
     return {
       searchQuery,
-      recipes: store.recipes,
+      recipes,
       onSearch,
-    };
+  };
   },
 });
 </script>
