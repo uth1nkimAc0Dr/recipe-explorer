@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <input
+  <div class="home-page">
+    <div class="search-input">
+      <input
       v-model="searchQuery"
       @input="onSearch"
       placeholder="Search for recipes..."
-    ></input>
-    <div v-for="recipe in recipes" :key="recipe.id">
-      <router-link :to="`detail/${recipe.id}`">{{ recipe.title }}</router-link>
+      ></input>
+    </div>
+
+    <div class="recipe-list">
+      <div v-for="recipe in recipes" :key="recipe.id" class="recipe-item">
+        <router-link :to="`detail/${recipe.id}`">{{ recipe.title }}</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -33,7 +38,7 @@ export default defineComponent({
     watch(
       () => searchQuery.value,
       () => {
-        onSearch();
+        onSearch(); 
       }
     );
 
@@ -52,3 +57,47 @@ export default defineComponent({
   },
 });
 </script>
+
+
+<style>
+.home-page{
+  padding: 20px;
+
+  .search-input{
+    margin-bottom: 20px;
+
+    input{
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  }
+
+  .recipe-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px;
+
+    .recipe-item{
+      /* background-color: orangered; */
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 2.5px;
+      padding: 12px;
+      width: calc(32%-20px);
+      text-align: center;
+
+      &:hover{
+        box-shadow:0 2px 8px rgb(4, 21, 45);
+      }
+
+      a{
+        text-decoration: none;
+      }
+    }
+  }
+
+}
+</style>
