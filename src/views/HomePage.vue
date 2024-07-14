@@ -1,23 +1,18 @@
 <template>
   <div class="home-page">
-    <div class="search-input">
-      <input
-      v-model="searchQuery"
-      @input="onSearch"
-      placeholder="Search for recipes..."
-      ></input>
-    </div>
 
     <div class="recipe-list">
       <div v-for="recipe in recipes" :key="recipe.id" class="recipe-item">
-        <router-link :to="`detail/${recipe.id}`">{{ recipe.title }}</router-link>
+        <router-link :to="`detail/${recipe.id}`">{{
+          recipe.title
+        }}</router-link>
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch, onMounted } from "vue";
 import { useRecipeStore } from "@/store/recipeStore";
 import { useDebounceFn } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";
@@ -33,12 +28,12 @@ export default defineComponent({
       store.fetchRecipes(searchQuery.value, "", 0, 20);
     }, 1000);
 
-    const recipes = computed(()=>store.recipes);
+    const recipes = computed(() => store.recipes);
 
     watch(
       () => searchQuery.value,
       () => {
-        onSearch(); 
+        onSearch();
       }
     );
 
@@ -49,24 +44,28 @@ export default defineComponent({
       }
     );
 
+    onMounted(() => {
+      console.log("Компонент смонтирован");
+      store.fetchRecipes("", "", 0, 20);
+    });
+
     return {
       searchQuery,
       recipes,
       onSearch,
-  };
+    };
   },
 });
 </script>
 
-
 <style>
-.home-page{
+.home-page {
   padding: 20px;
 
-  .search-input{
+  .search-input {
     margin-bottom: 20px;
 
-    input{
+    input {
       width: 100%;
       padding: 10px;
       border-radius: 5px;
@@ -75,12 +74,12 @@ export default defineComponent({
     }
   }
 
-  .recipe-list{
+  .recipe-list {
     display: flex;
     flex-wrap: wrap;
-    gap:20px;
+    gap: 20px;
 
-    .recipe-item{
+    .recipe-item {
       /* background-color: orangered; */
       background-color: #f9f9f9;
       border: 1px solid #ddd;
@@ -89,15 +88,14 @@ export default defineComponent({
       width: calc(32%-20px);
       text-align: center;
 
-      &:hover{
-        box-shadow:0 2px 8px rgb(4, 21, 45);
+      &:hover {
+        box-shadow: 0 2px 8px rgb(4, 21, 45);
       }
 
-      a{
+      a {
         text-decoration: none;
       }
     }
   }
-
 }
 </style>

@@ -17,9 +17,10 @@ export default defineComponent({
 
 <style lang="scss">
 @import "./styles/main.scss";
+
 .app {
   margin: 0 auto;
   min-width: 300px;
-  max-width: 600px;
+  max-width: 800px;
 }
 </style>

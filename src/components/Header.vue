@@ -8,17 +8,18 @@
       >
         Home
       </div>
-      <!-- <div
+
+      <div
         class="header__nav-item"
         :class="{ active: currentRoute === '/search' }"
         @click="navigateTo('/search')"
       >
         Search
-      </div> -->
+      </div>
       <div
         class="header__nav-item"
-        :class="{ active: currentRoute === '/detail' }"
-        @click="navigateTo('/detail')"
+        v-if="currentRoute.startsWith('/detail')"
+        :class="{ active: currentRoute.startsWith('/detail') }"
       >
         Detail
       </div>
@@ -56,6 +57,10 @@ export default defineComponent({
 
 <style lang="scss">
 .header {
+  background-color: rgb(57 175 184);
+  // padding: 20px;
+  padding: 10px 20px;
+
   &__nav {
     display: flex;
     flex-direction: row;
@@ -63,15 +68,12 @@ export default defineComponent({
 
     &-item {
       cursor: pointer;
+      font-size: 26px;
 
       &.active {
-        color: blueviolet;
+        color: rgb(86, 26, 142);
       }
     }
   }
 }
-
-// .active {
-//   color: blueviolet;
-// }
 </style>
