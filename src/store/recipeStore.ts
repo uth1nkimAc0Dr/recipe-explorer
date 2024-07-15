@@ -24,6 +24,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     number = 10
   ) => {
     loading.value = true;
+    error.value = null;
     try {
       const response = await searchRecipes(query, cuisine, offset, number);
       recipes.value = response.data.results;
@@ -34,8 +35,9 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     }
   };
   // includeNutrition: boolean
-  const fetchRecipeDetail = async (id: number, includeNutrition: boolean  ) => {
+  const fetchRecipeDetail = async (id: number, includeNutrition: boolean) => {
     loading.value = true;
+    error.value = null;
     try {
       const response = await getRecipeInformation(id);
       recipeDetail.value = response.data;

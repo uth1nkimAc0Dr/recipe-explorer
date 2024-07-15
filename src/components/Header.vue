@@ -16,6 +16,7 @@
       >
         Search
       </div>
+
       <div
         class="header__nav-item"
         v-if="currentRoute.startsWith('/detail')"
@@ -23,6 +24,11 @@
       >
         Detail
       </div>
+
+      <div class="header__nav-item" v-if="currentRoute.startsWith('/detail')">
+        Back
+      </div>
+      <!-- :class="{ active: currentRoute.startsWith('/detail') }" -->
     </nav>
   </header>
 </template>
