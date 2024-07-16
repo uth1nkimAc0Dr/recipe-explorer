@@ -3,7 +3,7 @@
     <div class="search-page__input-container">
       <input
         type="text"
-        v-model="searchQuery"
+        v-model="localSearchQuery"
         class="search-page__input"
         required
       />
@@ -28,31 +28,36 @@ import { useDebounceFn } from "@vueuse/core";
 export default defineComponent({
   setup() {
     const store = useRecipeStore();
-    const searchQuery = ref("");
-
+    const localSearchQuery = ref(store.searchQuery);
     const recipes = computed(() => store.recipes);
 
     onMounted(() => {
+      // можно убрать очистку выводимых данных
       store.clearRecipes();
+      console.log("localSearchQuery is", localSearchQuery);
+      onSearch();
     });
 
     const onSearch = useDebounceFn(() => {
-      if (searchQuery.value.trim() === "") {
+      if (localSearchQuery.value.trim() === "") {
         store.recipes = [];
-        console.log("очищено");
       } else {
-        store.fetchRecipes(searchQuery.value, "", 0, 20);
+        store.fetchRecipes(localSearchQuery.value, "", 0, 20);
         console.log("NewRecipes: ", recipes.value);
       }
     }, 1000);
 
-    // при изменении вводимого вызывается onSearch()
-    watch(searchQuery, () => {
+    /**
+     * при изменении вводимых данных вызывается onSearch()
+     * вводимое сохраняется в хранилище на случай возвращения на страницу
+     */
+    watch(localSearchQuery, (newQuery) => {
       onSearch();
+      store.setSearchQuery(newQuery);
     });
 
     return {
-      searchQuery,
+      localSearchQuery,
       recipes,
     };
   },

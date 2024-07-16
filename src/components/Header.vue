@@ -25,10 +25,13 @@
         Detail
       </div>
 
-      <div class="header__nav-item" v-if="currentRoute.startsWith('/detail')">
+      <div
+        class="header__nav-item"
+        v-if="currentRoute.startsWith('/detail')"
+        @click="goBack()"
+      >
         Back
       </div>
-      <!-- :class="{ active: currentRoute.startsWith('/detail') }" -->
     </nav>
   </header>
 </template>
@@ -49,6 +52,10 @@ export default defineComponent({
       router.push(path);
     };
 
+    const goBack = () => {
+      window.history.back();
+    };
+
     watch(route, (newRoute) => {
       currentRoute.value = newRoute.path;
     });
@@ -56,6 +63,7 @@ export default defineComponent({
     return {
       navigateTo,
       currentRoute,
+      goBack,
     };
   },
 });

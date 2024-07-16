@@ -6,7 +6,6 @@
       <h1>{{ recipeDetail.title }}</h1>
       <img :src="recipeDetail.image" alt="Recipe Image" />
     </div>
-    <div>DetailPage</div>
   </div>
 </template>
 

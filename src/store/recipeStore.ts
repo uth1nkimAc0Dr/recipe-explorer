@@ -1,9 +1,5 @@
 import { defineStore } from "pinia";
-import {
-  getRecipeInformation,
-  searchRecipes,
-  // searchRecipesByIngredients,
-} from "@/api/rest/recipeService";
+import { getRecipeInformation, searchRecipes } from "@/api/rest/recipeService";
 import { ref } from "vue";
 // import { fi } from "element-plus/es/locale";
 
@@ -12,6 +8,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
   const recipeDetail = ref<any | null>(null);
   const loading = ref<boolean>(false);
   const error = ref<any>(null);
+  const searchQuery = ref<string>("");
 
   // вообще у нас есть возможность напрямую менять состояние в компоненте, но это не
   // рекомендуется делатЬ, потому что будет сложно отследить зависимость и лучше писать
@@ -34,7 +31,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
       loading.value = false;
     }
   };
-  // includeNutrition: boolean
+
   const fetchRecipeDetail = async (id: number, includeNutrition: boolean) => {
     loading.value = true;
     error.value = null;
@@ -52,6 +49,10 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     recipes.value = [];
   };
 
+  const setSearchQuery = (query: string) => {
+    searchQuery.value = query;
+  };
+
   return {
     recipes,
     recipeDetail,
@@ -60,5 +61,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     fetchRecipes,
     fetchRecipeDetail,
     clearRecipes,
+    searchQuery,
+    setSearchQuery,
   };
 });
