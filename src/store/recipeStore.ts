@@ -48,6 +48,10 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     }
   };
 
+  const clearRecipes = () => {
+    recipes.value = [];
+  };
+
   return {
     recipes,
     recipeDetail,
@@ -55,5 +59,6 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     error,
     fetchRecipes,
     fetchRecipeDetail,
+    clearRecipes,
   };
 });

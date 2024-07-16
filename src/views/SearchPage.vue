@@ -32,6 +32,10 @@ export default defineComponent({
 
     const recipes = computed(() => store.recipes);
 
+    onMounted(() => {
+      store.clearRecipes();
+    });
+
     const onSearch = useDebounceFn(() => {
       if (searchQuery.value.trim() === "") {
         store.recipes = [];
