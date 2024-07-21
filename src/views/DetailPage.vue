@@ -1,10 +1,34 @@
 <template>
-  <div>
-    <div v-if="loading">Loading</div>
-    <div v-else-if="error">{{ error.message }}</div>
-    <div v-else-if="recipeDetail">
-      <h1>{{ recipeDetail.title }}</h1>
-      <img :src="recipeDetail.image" alt="Recipe Image" />
+  <div class="detail-page">
+    <div v-if="loading" class="detail-page__loading">Loading</div>
+    <div v-else-if="error" class="detail-page__error">{{ error.message }}</div>
+    <div v-else-if="recipeDetail" class="detail-page__content">
+      <h1 class="detail-page__title">{{ recipeDetail.title }}</h1>
+
+      <div class="detail-page__info">
+        <div class="detail-page__info-item">
+          readyInMinutes:
+          {{ recipeDetail.readyInMinutes }}
+        </div>
+
+        <div class="detail-page__info-item">
+          servings:
+          {{ recipeDetail.servings }}
+        </div>
+
+        <div class="detail-page__info-item">
+          Source URL is <a :href="recipeDetail.sourceUrl">Here</a>
+        </div>
+
+        <!-- <div class="detail-page__info-item">{{}}</div>
+        <div class="detail-page__info-item">{{}}</div> -->
+      </div>
+
+      <img
+        :src="recipeDetail.image"
+        alt="Recipe Image"
+        class="detail-page__image"
+      />
     </div>
   </div>
 </template>
@@ -34,3 +58,42 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.detail-page {
+  background: aqua;
+
+  &__loading {
+  }
+
+  &__error {
+  }
+
+  &__content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 8px;
+  }
+  &__info {
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    background: #809fd0;
+    width: 68%;
+
+    &-item {
+      color: black;
+    }
+  }
+
+  &__image {
+    width: 68%;
+  }
+}
+</style>

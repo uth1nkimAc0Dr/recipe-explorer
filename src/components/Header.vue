@@ -73,6 +73,7 @@ export default defineComponent({
 .header {
   background-color: rgb(57 175 184);
   // padding: 20px;
+  border-radius: 8px 8px 0px 0px;
   padding: 10px 20px;
 
   &__nav {

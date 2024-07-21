@@ -17,7 +17,7 @@ import { useRecipeStore } from "@/store/recipeStore";
 export default defineComponent({
   setup() {
     const store = useRecipeStore();
-    
+
     const recipes = computed(() => store.recipes);
 
     onMounted(() => {
@@ -34,6 +34,8 @@ export default defineComponent({
 <style lang="scss">
 .home-page {
   padding: 20px;
+  background: aqua;
+  border-radius: 0px 0px 8px 8px;
 }
 
 .recipe-list {
@@ -45,7 +47,7 @@ export default defineComponent({
 .recipe-item {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 0.5px;
+  border-radius: 6px;
   padding: 12px;
   width: calc(32% - 30px);
   text-align: center;

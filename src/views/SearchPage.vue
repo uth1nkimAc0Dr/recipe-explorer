@@ -32,7 +32,6 @@ export default defineComponent({
     const recipes = computed(() => store.recipes);
 
     onMounted(() => {
-      // можно убрать очистку выводимых данных
       store.clearRecipes();
       console.log("localSearchQuery is", localSearchQuery);
       onSearch();
@@ -71,6 +70,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   background: aqua;
+  border-radius: 0px 0px 8px 8px;
   padding: 10px;
 
   &__input-container {
@@ -79,7 +79,6 @@ export default defineComponent({
     box-sizing: border-box;
     position: relative;
     height: 56px;
-    // line-height: 80px;
     z-index: 5;
   }
 
@@ -104,10 +103,10 @@ export default defineComponent({
     top: 20%;
     left: 14%;
     z-index: 10;
-
+    // background-color: aqua;
     font-size: 24px;
     color: #1426c7;
-    transition: 0.2s ease;
+    transition: 1s ease;
   }
 
   input:hover {
@@ -126,6 +125,8 @@ export default defineComponent({
     transform: translate(10px, -24px) scale(0.9);
     // сделать перекрытие бордера
     z-index: 1111;
+    background-color: aqua;
+    transition: 0.05s ease;
   }
 }
 </style>
