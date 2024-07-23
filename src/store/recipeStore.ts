@@ -9,22 +9,21 @@ export const useRecipeStore = defineStore("recipe-store", () => {
   const loading = ref<boolean>(false);
   const error = ref<any>(null);
   const searchQuery = ref<string>("");
+  const totalPages = ref<number>(25);
 
-  // вообще у нас есть возможность напрямую менять состояние в компоненте, но это не
-  // рекомендуется делатЬ, потому что будет сложно отследить зависимость и лучше писать
-  // отдельные экшены, для этого "actions:"
-  // actinos
+  // желательно писать actions отдель
   const fetchRecipes = async (
     query = "",
     cuisine = "",
     offset = 0,
-    number = 10
+    number = 15
   ) => {
     loading.value = true;
     error.value = null;
     try {
       const response = await searchRecipes(query, cuisine, offset, number);
       recipes.value = response.data.results;
+      totalPages.value = Math.ceil(response.data.totalResults / number);
     } catch (error: any) {
       error.value = error;
     } finally {
@@ -63,5 +62,6 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     clearRecipes,
     searchQuery,
     setSearchQuery,
+    totalPages,
   };
 });

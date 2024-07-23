@@ -7,25 +7,70 @@
         }}</router-link>
       </div>
     </div>
+    <div>
+      <button @click="prevPage" :disabled="currentPage === 1">Назад</button>
+      <span> Страница {{ currentPage }} из {{ totalPages }}</span>
+      <button @click="nextPage" :disabled="currentPage === totalPages">
+        Вперед
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from "vue";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useRecipeStore } from "@/store/recipeStore";
 
 export default defineComponent({
   setup() {
     const store = useRecipeStore();
+    const currentPage = ref(1);
+    // const itemsPerPage = 10;
+    // const totalPages = ref(100);
+    const itemsPerPage = 21;
 
     const recipes = computed(() => store.recipes);
+    const totalPages = computed(() => store.totalPages);
+    // const totalPages = computed(() => {
+    //   store.totalPages;
+    // });
+
+    const fetchCurrentPageRecipes = () => {
+      const offset = (currentPage.value - 1) * itemsPerPage;
+      store.fetchRecipes("", "", offset, itemsPerPage);
+    };
+
+    const prevPage = () => {
+      if (currentPage.value > 1) {
+        currentPage.value--;
+        // Здесь нужно добавить логику для загрузки предыдущей страницы рецептов
+        fetchCurrentPageRecipes();
+      }
+    };
+
+    const nextPage = () => {
+      if (totalPages.value != null && currentPage.value < totalPages.value) {
+        currentPage.value++;
+        fetchCurrentPageRecipes();
+        // Здесь нужно добавить логику для загрузки следующей страницы рецептов
+      }
+    };
 
     onMounted(() => {
       console.log("Компонент смонтирован");
-      store.fetchRecipes("", "", 0, 30);
+      // store.fetchRecipes("", "", 0, itemsPerPage);
+      fetchCurrentPageRecipes();
+
+      watch(currentPage, fetchCurrentPageRecipes);
     });
+
     return {
       recipes,
+      currentPage,
+      totalPages,
+      prevPage,
+      nextPage,
+      itemsPerPage,
     };
   },
 });
