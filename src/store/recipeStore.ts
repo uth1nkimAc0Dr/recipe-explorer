@@ -9,14 +9,15 @@ export const useRecipeStore = defineStore("recipe-store", () => {
   const loading = ref<boolean>(false);
   const error = ref<any>(null);
   const searchQuery = ref<string>("");
-  const totalPages = ref<number>(25);
+  const totalPages = ref<number>(0);
 
   // желательно писать actions отдель
+  // поиск рецептов по запросу и обновление списка рецептов
   const fetchRecipes = async (
-    query = "",
-    cuisine = "",
-    offset = 0,
-    number = 15
+    query = "", //содержание запроса
+    cuisine = "", //вид кухни
+    offset = 0, //кол-во заскипанных рецептов(для пагинации)
+    number = 21 //кол-во получаемых рецептов
   ) => {
     loading.value = true;
     error.value = null;
@@ -24,6 +25,8 @@ export const useRecipeStore = defineStore("recipe-store", () => {
       const response = await searchRecipes(query, cuisine, offset, number);
       recipes.value = response.data.results;
       totalPages.value = Math.ceil(response.data.totalResults / number);
+      console.log("totalPages.value", totalPages.value);
+      // некорректные значения у totalPages.value
     } catch (error: any) {
       error.value = error;
     } finally {
@@ -31,7 +34,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     }
   };
 
-  const fetchRecipeDetail = async (id: number, includeNutrition: boolean) => {
+  const fetchRecipeDetail = async (id: number) => {
     loading.value = true;
     error.value = null;
     try {

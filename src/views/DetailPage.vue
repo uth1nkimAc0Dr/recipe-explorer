@@ -47,7 +47,7 @@ export default defineComponent({
     const recipeDetail = computed(() => store.recipeDetail);
 
     onMounted(() => {
-      store.fetchRecipeDetail(Number(route.params.id), false);
+      store.fetchRecipeDetail(Number(route.params.id));
     });
 
     return {
