@@ -65,31 +65,25 @@ export default defineComponent({
   padding: 20px;
   background: aqua;
   border-radius: 0px 0px 8px 8px;
-
-  .pagination-controls {
-    margin: 20px auto 0px;
-    background: rgb(57, 175, 184);
-    width: 40%;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
-    border-radius: 8px;
-  }
 }
 
 .recipe-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  flex-direction: row;
+  // align-items: center;
+  justify-content: center;
 }
 
 .recipe-item {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 12px;
+  padding: 8px;
   width: calc(32% - 30px);
   text-align: center;
+  min-width: 90px;
 
   &:hover {
     box-shadow: 0 2px 8px rgb(4, 21, 45);

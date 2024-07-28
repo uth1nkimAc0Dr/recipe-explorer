@@ -21,6 +21,6 @@ export default defineComponent({
 .app {
   margin: 0 auto;
   min-width: 300px;
-  max-width: 800px;
+  max-width: 80%;
 }
 </style>
