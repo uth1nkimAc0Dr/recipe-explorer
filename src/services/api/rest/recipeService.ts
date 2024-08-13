@@ -12,6 +12,8 @@ const apiKeys = [
   "5047a386b5634900b657535957917378",
   "92530522991d4720929a300065398575",
   "bdf01068e1144876b4481e5ee8d8c1f0",
+  "6f016adab41f4a2cba20f08eb4c3e002",
+  "5f12412606474fdb971e2cca93706082",
 ];
 
 let currentApiKeyIndex = 0;
@@ -60,5 +62,9 @@ export const searchRecipes = (
 };
 
 export const getRecipeInformation = (id: number) => {
-  return apiClient.get(`/recipes/${id}/information`);
+  return apiClient.get(`/recipes/${id}/information`, {
+    params: {
+      includeNutrition: true,
+    },
+  });
 };

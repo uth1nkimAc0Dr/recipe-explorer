@@ -63,7 +63,14 @@ export default defineComponent({
 <style lang="scss">
 .home-page {
   padding: 20px;
-  background: aqua;
+  background: linear-gradient(
+    247deg,
+    #332efe,
+    #ff2768,
+    #985ce1,
+    #abb19b,
+    #f40068
+  );
   border-radius: 0px 0px 8px 8px;
 }
 
@@ -77,13 +84,14 @@ export default defineComponent({
 }
 
 .recipe-item {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 6px;
   padding: 8px;
   width: calc(32% - 30px);
   text-align: center;
   min-width: 90px;
+  font-size: 16px;
+  font-weight: 500;
 
   &:hover {
     box-shadow: 0 2px 8px rgb(4, 21, 45);

@@ -14,10 +14,12 @@
     "axios": "^1.7.2",
     "element-plus": "^2.7.6",
     "pinia": "^2.1.7",
+    "three": "^0.167.1",
     "vue": "^3.4.29",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@types/three": "^0.167.1",
     "@vitejs/plugin-vue": "^5.0.5",
     "cz-customizable": "^7.2.1",
     "sass": "^1.77.6",

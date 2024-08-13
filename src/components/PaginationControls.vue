@@ -1,21 +1,33 @@
 <template>
-  <div class="pagination-controls">
+  <div class="pagination-controls nabla-uni">
     <button
-      class="pagination-controls__button"
+      class="pagination-controls__button nabla-uni"
       @click="prevPage"
       :disabled="currentPage === 1"
     >
-      Назад
+      Back
     </button>
-    <span class="pagination-controls__info"
-      >Страница {{ currentPage }} из {{ totalPages }}</span
-    >
+
+    <span class="pagination-controls__info">
+      Page
+
+      <span class="nabla-uni">
+        {{ currentPage }}
+      </span>
+
+      of
+
+      <span class="nabla-uni">
+        {{ totalPages }}
+      </span>
+    </span>
+
     <button
-      class="pagination-controls__button"
+      class="pagination-controls__button nabla-uni"
       @click="nextPage"
       :disabled="currentPage === totalPages"
     >
-      Вперед
+      Next
     </button>
   </div>
 </template>
@@ -52,12 +64,12 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .pagination-controls {
-  margin: 20px auto;
+  margin: 20px auto 5px;
   background: linear-gradient(45deg, #56ccf2, #2f80ed);
   width: 50%;
-  min-width: 250px;
+  min-width: 220px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,9 +77,17 @@ export default defineComponent({
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
   color: #fff;
+  font-family: "Nabla", system-ui;
 
   &__button {
-    background: #fff;
+    background: linear-gradient(
+      11deg,
+      #67254c,
+      #82487f,
+      #926eb7,
+      #9499f0,
+      #d08272
+    );
     color: #2f80ed;
     border: none;
     border-radius: 5px;
@@ -83,7 +103,15 @@ export default defineComponent({
     }
 
     &:disabled {
-      background: #e0e0e0;
+      opacity: 0.5;
+      background: linear-gradient(
+        192deg,
+        #ffffff,
+        #a57da3,
+        #9964d1,
+        #bca1cb,
+        #7fc747
+      );
       color: #9e9e9e;
       cursor: not-allowed;
     }
@@ -92,6 +120,18 @@ export default defineComponent({
   &__info {
     font-size: 18px;
     font-weight: bold;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .detail-page__chart {
+    width: 90%;
+  }
+
+  .detail-page__chart canvas {
+    max-width: 90%;
+    // не помогает
+    height: auto;
   }
 }
 </style>

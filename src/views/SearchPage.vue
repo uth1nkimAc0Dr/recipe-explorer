@@ -69,7 +69,14 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: aqua;
+  background: linear-gradient(
+    181deg,
+    #b68f8f,
+    #6e45bb,
+    #586ad4,
+    #2e5d96,
+    #8b9398
+  );
   border-radius: 0px 0px 8px 8px;
   padding: 10px;
 
@@ -87,7 +94,7 @@ export default defineComponent({
     top: 5%;
     left: 12%;
     z-index: 1111;
-
+    font-family: "Jura";
     width: calc(70%);
     padding: 5px 12px;
     border: 2px solid #23ed23;
@@ -105,7 +112,7 @@ export default defineComponent({
     z-index: 10;
     // background-color: aqua;
     font-size: 24px;
-    color: #1426c7;
+    color: #e3ffb5;
     transition: 1s ease;
   }
 
@@ -115,17 +122,27 @@ export default defineComponent({
 
   input:focus,
   input:valid {
-    color: rgb(112, 21, 139);
+    color: #ffffff;
     border: 4px solid #236aed;
   }
 
   input:focus + .search-page__label,
   input:valid + .search-page__label {
-    color: #4f4e1a;
+    padding: 0px 4px;
+    border-radius: 5px;
+    color: #180049;
+
     transform: translate(10px, -24px) scale(0.9);
     // сделать перекрытие бордера
     z-index: 1111;
-    background-color: aqua;
+    background: linear-gradient(
+      181deg,
+      #957a9d,
+      #a145bb0a,
+      #6674c5,
+      #6968b600,
+      #066eb0
+    );
     transition: 0.05s ease;
   }
 }

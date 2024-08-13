@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
-import { getRecipeInformation, searchRecipes } from "@/api/rest/recipeService";
+import {
+  getRecipeInformation,
+  searchRecipes,
+} from "@/services/api/rest/recipeService";
 import { ref } from "vue";
 // import { fi } from "element-plus/es/locale";
 
@@ -26,6 +29,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
       recipes.value = response.data.results;
       totalPages.value = Math.ceil(response.data.totalResults / number);
       console.log("totalPages.value", totalPages.value);
+      console.log("в общем результатов", response.data.totalResults);
       // некорректные значения у totalPages.value
     } catch (error: any) {
       error.value = error;
@@ -39,7 +43,24 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     error.value = null;
     try {
       const response = await getRecipeInformation(id);
-      recipeDetail.value = response.data;
+      const data = response.data;
+      recipeDetail.value = {
+        ...data,
+        nutrition: {
+          carbs:
+            data.nutrition.nutrients.find(
+              (n: any) => n.name === "Carbohydrates"
+            )?.amount || 0,
+          fat:
+            data.nutrition.nutrients.find((n: any) => n.name === "Fat")
+              ?.amount || 0,
+          protein:
+            data.nutrition.nutrients.find((n: any) => n.name === "Protein")
+              ?.amount || 0,
+        },
+      };
+
+      // response.data;
     } catch (error: any) {
       error.value = error;
     } finally {

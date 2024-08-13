@@ -19,15 +19,23 @@
 
       <div
         class="header__nav-item"
-        v-if="currentRoute.startsWith('/detail')"
-        :class="{ active: currentRoute.startsWith('/detail') }"
+        v-if="
+          typeof currentRoute === 'string' && currentRoute.startsWith('/detail')
+        "
+        :class="{
+          active:
+            typeof currentRoute === 'string' &&
+            currentRoute.startsWith('/detail'),
+        }"
       >
         Detail
       </div>
 
       <div
         class="header__nav-item"
-        v-if="currentRoute.startsWith('/detail')"
+        v-if="
+          typeof currentRoute === 'string' && currentRoute.startsWith('/detail')
+        "
         @click="goBack()"
       >
         Back
@@ -46,7 +54,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const currentRoute = ref(route.path);
+    const currentRoute = ref<string>(route.path);
 
     const navigateTo = (path: string) => {
       router.push(path);
@@ -71,7 +79,14 @@ export default defineComponent({
 
 <style lang="scss">
 .header {
-  background-color: rgb(57 175 184);
+  background: linear-gradient(
+    351deg,
+    #5364a0,
+    #57487b,
+    #4f2e56,
+    #401734,
+    #a8024f
+  );
   // padding: 20px;
   border-radius: 8px 8px 0px 0px;
   padding: 10px 20px;
@@ -86,7 +101,7 @@ export default defineComponent({
       font-size: 26px;
 
       &.active {
-        color: rgb(86, 26, 142);
+        color: rgb(222 186 255);
       }
     }
   }
