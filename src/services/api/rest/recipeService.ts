@@ -45,22 +45,32 @@ apiClient.interceptors.response.use(
   }
 );
 
+// Search Recipes
 export const searchRecipes = (
   query: string,
   cuisine: string,
   offset: number,
-  number: number
+  number: number,
+  diet: string = "",
+  type: string = ""
 ) => {
-  return apiClient.get("/recipes/complexSearch", {
-    params: {
-      query: query,
-      cuisine: cuisine,
-      offset: offset,
-      number: number,
-    },
-  });
+  const params: any = {
+    query,
+    cuisine,
+    offset,
+    number,
+  };
+  if (diet) {
+    params.diet = diet;
+  }
+
+  if (type) {
+    params.type = type;
+  }
+  return apiClient.get("/recipes/complexSearch", { params });
 };
 
+// Get recipe information
 export const getRecipeInformation = (id: number) => {
   return apiClient.get(`/recipes/${id}/information`, {
     params: {

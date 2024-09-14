@@ -1,5 +1,12 @@
 <template>
   <div class="home-page">
+    <RecipeFilter
+      :diets="dietTypes"
+      :cuisines="cuisineTypes"
+      :mealTypes="mealTypes"
+      @filterChange="handleFilterChange"
+    />
+
     <div class="recipe-list">
       <div v-for="recipe in recipes" :key="recipe.id" class="recipe-item">
         <router-link :to="`detail/${recipe.id}`">{{
@@ -20,9 +27,10 @@
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useRecipeStore } from "@/store/recipeStore";
 import PaginationControls from "@/components/PaginationControls.vue";
+import RecipeFilter from "@/components/RecipeFilter.vue";
 
 export default defineComponent({
-  components: { PaginationControls },
+  components: { PaginationControls, RecipeFilter },
   setup() {
     const store = useRecipeStore();
     const currentPage = ref(1);
@@ -31,14 +39,95 @@ export default defineComponent({
     const recipes = computed(() => store.recipes);
     const totalPages = computed(() => store.totalPages);
 
-    //
+    const dietTypes = [
+      "Gluten Free",
+      "Ketogenic",
+      "Vegetarian",
+      "Lacto-Vegetarian",
+      "Ovo-Vegetarion",
+      "Vegan",
+      "Pescetarian",
+      "Paleo",
+      "Primal",
+      "Low FODMAP",
+      "Whole30",
+    ];
+    const cuisineTypes = [
+      "African",
+      "Asian",
+      "American",
+      "British",
+      "Cajun",
+      "Caribbean",
+      "Chinese",
+      "Eastern European",
+      "European",
+      "French",
+      "German",
+      "Greek",
+      "Indian",
+      "Irish",
+      "Italian",
+      "Japanese",
+      "Jewish",
+      "Korean",
+      "Latin American",
+      "Mediterranean",
+      "Mexican",
+      "Middle Eastern",
+      "Nordic",
+      "Southern",
+      "Spanish",
+      "Thai",
+      "Vietnamese",
+    ];
+    const mealTypes = [
+      "main course",
+      "side dish",
+      "dessert",
+      "appetizer",
+      "salad",
+      "bread",
+      "breakfast",
+      "soup",
+      "beverage",
+      "sauce",
+      "marinade",
+      "fingerfood",
+      "snack",
+      "drink",
+    ];
+
+    const filters = ref({
+      diets: [] as string[],
+      cuisines: [] as string[],
+      mealTypes: [] as string[],
+    });
+
     const fetchCurrentPageRecipes = () => {
       const offset = (currentPage.value - 1) * itemsPerPage;
-      store.fetchRecipes("", "", offset, itemsPerPage);
+      const { diets, cuisines, mealTypes } = filters.value;
+      store.fetchRecipes(
+        "",
+        cuisines.join(","),
+        offset,
+        itemsPerPage,
+        diets.join(","),
+        mealTypes.join(",")
+      );
     };
 
     const handlePageChange = (page: number) => {
       currentPage.value = page;
+      fetchCurrentPageRecipes();
+    };
+
+    const handleFilterChange = (newFilters: {
+      diets: string[];
+      cuisines: string[];
+      mealTypes: string[];
+    }) => {
+      filters.value = newFilters;
       fetchCurrentPageRecipes();
     };
 
@@ -55,6 +144,10 @@ export default defineComponent({
       totalPages,
       itemsPerPage,
       handlePageChange,
+      handleFilterChange,
+      dietTypes,
+      cuisineTypes,
+      mealTypes,
     };
   },
 });
@@ -84,7 +177,8 @@ export default defineComponent({
 }
 
 .recipe-item {
-  border: 2px solid #ddd;
+  border: 2px solid #110b0b;
+  background: white;
   border-radius: 6px;
   padding: 8px;
   width: calc(32% - 30px);

@@ -4,7 +4,6 @@ import {
   searchRecipes,
 } from "@/services/api/rest/recipeService";
 import { ref } from "vue";
-// import { fi } from "element-plus/es/locale";
 
 export const useRecipeStore = defineStore("recipe-store", () => {
   const recipes = ref<any[]>([]); //массив списка рецептов
@@ -14,19 +13,28 @@ export const useRecipeStore = defineStore("recipe-store", () => {
   const searchQuery = ref<string>("");
   const totalPages = ref<number>(0);
 
-  // желательно писать actions отдель
   // поиск рецептов по запросу и обновление списка рецептов
   const fetchRecipes = async (
     query = "", //содержание запроса
     cuisine = "", //вид кухни
     offset = 0, //кол-во заскипанных рецептов(для пагинации)
-    number = 21 //кол-во получаемых рецептов
+    number = 21, //кол-во получаемых рецептов
+    diet = "",
+    type = ""
   ) => {
     loading.value = true;
     error.value = null;
     try {
-      const response = await searchRecipes(query, cuisine, offset, number);
+      const response = await searchRecipes(
+        query,
+        cuisine,
+        offset,
+        number,
+        diet,
+        type
+      );
       recipes.value = response.data.results;
+      //
       totalPages.value = Math.ceil(response.data.totalResults / number);
       console.log("totalPages.value", totalPages.value);
       console.log("в общем результатов", response.data.totalResults);
@@ -38,6 +46,7 @@ export const useRecipeStore = defineStore("recipe-store", () => {
     }
   };
 
+  // получение детальной информации о рецепте
   const fetchRecipeDetail = async (id: number) => {
     loading.value = true;
     error.value = null;

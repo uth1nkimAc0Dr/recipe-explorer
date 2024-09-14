@@ -80,7 +80,7 @@ export default defineComponent({
 <style lang="scss">
 .header {
   background: linear-gradient(
-    351deg,
+    180deg,
     #5364a0,
     #57487b,
     #4f2e56,

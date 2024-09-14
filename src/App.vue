@@ -9,7 +9,7 @@
 import { defineComponent } from "vue";
 import Header from "./components/Header.vue";
 
-export default defineComponent({
+export default defineComponent({      
   name: "App",
   components: { Header },
 });
@@ -21,6 +21,6 @@ export default defineComponent({
 .app {
   margin: 0 auto;
   min-width: 300px;
-  max-width: 80%;
+  max-width: 96%;
 }
 </style>

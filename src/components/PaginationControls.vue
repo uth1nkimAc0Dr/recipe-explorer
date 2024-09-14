@@ -10,16 +10,9 @@
 
     <span class="pagination-controls__info">
       Page
-
-      <span class="nabla-uni">
-        {{ currentPage }}
-      </span>
-
+      <span class="nabla-uni"> {{ currentPage }} </span>
       of
-
-      <span class="nabla-uni">
-        {{ totalPages }}
-      </span>
+      <span class="nabla-uni"> {{ totalPages }} </span>
     </span>
 
     <button
@@ -33,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, toRefs } from "vue";
 
 export default defineComponent({
   props: {
@@ -46,20 +39,29 @@ export default defineComponent({
       required: true,
     },
   },
+
   emits: ["pageChange"],
-  methods: {
-    prevPage() {
-      console.log("назад");
-      if (this.currentPage > 1) {
-        this.$emit("pageChange", this.currentPage - 1);
+
+  setup(props, { emit }) {
+    const { currentPage, totalPages } = toRefs(props);
+
+    const prevPage = () => {
+      console.log("Back!");
+      if (currentPage.value > 1) {
+        emit("pageChange", currentPage.value - 1);
       }
-    },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.$emit("pageChange", this.currentPage + 1);
-        console.log("totalPages is", this.totalPages);
+    };
+
+    const nextPage = () => {
+      if (currentPage.value < totalPages.value) {
+        emit("pageChange", currentPage.value + 1);
       }
-    },
+    };
+
+    return {
+      prevPage,
+      nextPage,
+    };
   },
 });
 </script>
@@ -105,12 +107,12 @@ export default defineComponent({
     &:disabled {
       opacity: 0.5;
       background: linear-gradient(
-        192deg,
-        #ffffff,
-        #a57da3,
-        #9964d1,
-        #bca1cb,
-        #7fc747
+        -180deg,
+        #5364a0,
+        #57487b,
+        #4f2e56,
+        #401734,
+        #a8024f
       );
       color: #9e9e9e;
       cursor: not-allowed;
